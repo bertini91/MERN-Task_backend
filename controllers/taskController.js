@@ -35,7 +35,7 @@ exports.postTask = async (req, res) => {
 exports.getTasks = async (req, res) => {
   try {
     //Extraer el proyecto y comprobar si existe
-    const { project } = req.body;
+    const { project } = req.query;
     const projectObj = await Project.findById(project);
     if (!projectObj) {
       return res.status(404).json({ msg: "Proyecto no encontrado" });
@@ -47,7 +47,7 @@ exports.getTasks = async (req, res) => {
     }
 
     //Obtener tareas por proyecto
-    const tasks = await Task.find({ project });
+    const tasks = await Task.find({ project }).sort({ created: -1 });
     res.json({ tasks });
   } catch (error) {
     console.log(error);
@@ -68,7 +68,7 @@ exports.putTask = async (req, res) => {
 
     //Extraer proyecto
     const projectObj = await Project.findById(project);
-    
+
     //Revisar si el proyecto actual pertenece al usuario autenticado
     if (projectObj.creator.toString() !== req.user.id) {
       return res.status(401).json({ msg: "No autorizado" });
@@ -76,12 +76,8 @@ exports.putTask = async (req, res) => {
 
     //Creamos el obj con la nueva info
     let newTask = {};
-    if (name) {
-      newTask.name = name;
-    }
-    if (state) {
-      newTask.state = state;
-    }
+    newTask.name = name;
+    newTask.state = state;
 
     //Actualizamos la tarea
     taskObj = await Task.findOneAndUpdate({ _id: req.params.id }, newTask, {
@@ -98,7 +94,8 @@ exports.putTask = async (req, res) => {
 exports.deleteTask = async (req, res) => {
   try {
     //Extraer el proyecto y comprobar si existe
-    const { project } = req.body;
+    const { project } = req.query;
+    console.log(project);
 
     //Si la tarea existe o no
     let taskObj = await Task.findById(req.params.id);
@@ -108,7 +105,7 @@ exports.deleteTask = async (req, res) => {
 
     //Extraer proyecto
     const projectObj = await Project.findById(project);
-    console.log(projectObj);
+
     //Revisar si el proyecto actual pertenece al usuario autenticado
     if (projectObj.creator.toString() !== req.user.id) {
       return res.status(401).json({ msg: "No autorizado" });
