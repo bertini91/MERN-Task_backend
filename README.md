@@ -3,6 +3,8 @@
 ## Description
 This project is planned as a task management system for projects that are in production.
 Each project will have its tasks, of which they can be modified, change their status to completed or in progress, and they can also be eliminated.
+
+The development framework used was MERN.
 The themes implemented were react context, types, JWT and private routes 
 
 ## Commands to run the project are:
