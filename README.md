@@ -9,20 +9,24 @@ The development framework used was MERN.
 The themes implemented were react context, types, JWT and private routes 
 
 ## Commands to run the project are:
+
+```javascript
 git clone URL
 npm install
+
+```
 
 ### Located at the root of the project you must run the following command:
 
 ### In Front-end project
-npm start
+#### `npm start`
 
 ### In Back-end project
-npm run dev
+#### `npm run dev`
 
 Run the application in development mode. Open http://localhost:8080 to see it in the browser.
 
 The page will reload if you make any changes. You will also see any fluff errors on the console.
 
-### Author
+## Author
 Nicolás Bertini Argañaras
